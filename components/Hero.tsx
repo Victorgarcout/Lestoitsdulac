@@ -213,12 +213,12 @@ export default function Hero() {
           bottom: -1,
           left: 0,
           width: '100%',
-          height: '34%',
+          height: isMobile ? 'auto' : '34%',
           zIndex: 6,
           transform: `translateY(${(1 - p) * 8}%)`,
         }}
-        viewBox={isMobile ? '100 0 400 280' : '0 0 1440 280'}
-        preserveAspectRatio="none"
+        viewBox="0 0 1440 280"
+        preserveAspectRatio={isMobile ? 'xMidYMax meet' : 'none'}
       >
         <defs>
           <linearGradient id="lakeGrad" x1="0" y1="0" x2="0" y2="1">
