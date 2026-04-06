@@ -62,7 +62,7 @@ export default function Navbar() {
         style={{
           maxWidth: 1200,
           margin: '0 auto',
-          padding: '0 32px',
+          padding: isMobile ? '0 16px' : '0 32px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -70,7 +70,7 @@ export default function Navbar() {
       >
         {/* Logo */}
         <div
-          style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', flexShrink: 0 }}
           onClick={() => scrollTo('hero')}
         >
           <Mountain size={24} color={GOLD} strokeWidth={1.5} />
@@ -78,11 +78,12 @@ export default function Navbar() {
             <div
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 20,
+                fontSize: isMobile ? 16 : 20,
                 fontWeight: 700,
                 color: CREAM,
-                letterSpacing: 2,
+                letterSpacing: isMobile ? 1.5 : 2,
                 lineHeight: 1,
+                whiteSpace: 'nowrap',
               }}
             >
               LES TOITS DU LAC
@@ -92,9 +93,10 @@ export default function Navbar() {
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: 9,
                 color: GOLD,
-                letterSpacing: 3,
+                letterSpacing: isMobile ? 2 : 3,
                 fontWeight: 400,
                 textTransform: 'uppercase',
+                whiteSpace: 'nowrap',
               }}
             >
               Conciergerie hôtelière

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useScrollY } from '@/hooks/useScrollY';
 import {
@@ -22,6 +22,14 @@ export default function Hero() {
   const scrollY = useScrollY();
   const heroRef = useRef<HTMLElement>(null);
   const heroH = useRef(1000);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     if (heroRef.current) heroH.current = heroRef.current.offsetHeight;
@@ -45,9 +53,9 @@ export default function Hero() {
       className="grain"
       style={{
         position: 'relative',
-        minHeight: '120vh',
+        minHeight: isMobile ? '100vh' : '120vh',
         display: 'flex',
-        alignItems: 'center',
+        alignItems: isMobile ? 'flex-start' : 'center',
         justifyContent: 'center',
         background: `linear-gradient(180deg, #060D1A 0%, #0A1628 25%, ${NAVY} 50%, #1A3152 80%, #1E3A5F 100%)`,
         overflow: 'hidden',
@@ -97,13 +105,13 @@ export default function Hero() {
         style={{
           position: 'absolute',
           top: '12%',
-          right: '15%',
+          right: isMobile ? '8%' : '15%',
           zIndex: 1,
           opacity: Math.max(0, 1 - p * 2),
           transform: `translateY(${p * -80}px)`,
         }}
       >
-        <svg width="48" height="48" viewBox="0 0 48 48">
+        <svg width={isMobile ? 32 : 48} height={isMobile ? 32 : 48} viewBox="0 0 48 48">
           <defs>
             <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stopColor={GOLD_LIGHT} stopOpacity="0.3" />
@@ -209,7 +217,7 @@ export default function Hero() {
           zIndex: 6,
           transform: `translateY(${(1 - p) * 8}%)`,
         }}
-        viewBox="0 0 1440 280"
+        viewBox={isMobile ? '100 0 400 280' : '0 0 1440 280'}
         preserveAspectRatio="none"
       >
         <defs>
@@ -383,7 +391,7 @@ export default function Hero() {
           position: 'relative',
           zIndex: 10,
           textAlign: 'center',
-          padding: '120px 32px 280px',
+          padding: isMobile ? '80px 20px 32px' : '120px 32px 280px',
           maxWidth: 900,
           margin: '0 auto',
           opacity: Math.max(0, 1 - p * 2.2),

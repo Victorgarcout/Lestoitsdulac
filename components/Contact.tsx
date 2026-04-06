@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { useInView } from '@/hooks/useInView';
 import { CONTACT_INFO } from '@/constants/content';
@@ -8,6 +8,15 @@ import { CREAM, CREAM_DARK, GOLD, NAVY, ROOF_RED, SLATE, WHITE } from '@/constan
 
 export default function Contact() {
   const { ref: sectionRef, inView: visible } = useInView<HTMLElement>(0.1);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -127,7 +136,7 @@ export default function Contact() {
             ...anim(0.2),
             background: '#FFFFFF',
             borderRadius: 20,
-            padding: '40px 36px',
+            padding: isMobile ? '32px 20px' : '40px 36px',
             border: '1px solid #F0EADE',
             boxShadow: '0 20px 60px rgba(12,26,46,0.06)',
           }}
