@@ -9,6 +9,7 @@ import Team from '@/components/Team';
 import OffreDecouverte from '@/components/OffreDecouverte';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import StickyEstimationCTA from '@/components/StickyEstimationCTA';
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       <OffreDecouverte />
       <Contact />
       <Footer />
+      <StickyEstimationCTA />
     </main>
   );
 }

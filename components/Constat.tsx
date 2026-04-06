@@ -1,10 +1,12 @@
 'use client';
 
 import { useInView } from '@/hooks/useInView';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { CREAM, GOLD, NAVY, SLATE } from '@/constants/colors';
 
 export default function Constat() {
   const { ref, inView: visible } = useInView<HTMLElement>(0.15);
+  const isMobile = useIsMobile();
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,
@@ -16,7 +18,7 @@ export default function Constat() {
     <section
       id="probleme"
       ref={ref}
-      style={{ padding: '100px 32px 80px', background: '#FAF6EE' }}
+      style={{ padding: isMobile ? '56px 20px 48px' : '100px 32px 80px', background: '#FAF6EE' }}
     >
       <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
         <div style={anim(0)}>

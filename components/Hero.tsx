@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useScrollY } from '@/hooks/useScrollY';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import {
   NAVY, NAVY_LIGHT, GOLD, GOLD_LIGHT, CREAM,
   ROOF_RED, ROOF_DARK, ROOF_LIGHT,
@@ -22,14 +23,7 @@ export default function Hero() {
   const scrollY = useScrollY();
   const heroRef = useRef<HTMLElement>(null);
   const heroH = useRef(1000);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (heroRef.current) heroH.current = heroRef.current.offsetHeight;
@@ -391,7 +385,7 @@ export default function Hero() {
           position: 'relative',
           zIndex: 10,
           textAlign: 'center',
-          padding: isMobile ? '80px 20px 32px' : '120px 32px 280px',
+          padding: isMobile ? '80px 20px 100px' : '120px 32px 280px',
           maxWidth: 900,
           margin: '0 auto',
           opacity: Math.max(0, 1 - p * 2.2),
@@ -423,6 +417,7 @@ export default function Hero() {
             lineHeight: 1.1,
             marginBottom: 12,
             animation: 'fadeUp 1s ease 0.4s both',
+            textShadow: '0 2px 20px rgba(6,13,26,0.8)',
           }}
         >
           Votre bien mérite une<br />
@@ -443,12 +438,13 @@ export default function Hero() {
           style={{
             fontFamily: "'Outfit', sans-serif",
             fontSize: 'clamp(16px, 2vw, 19px)',
-            color: 'rgba(255,255,255,0.6)',
+            color: isMobile ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.6)',
             fontWeight: 300,
             lineHeight: 1.7,
             maxWidth: 600,
             margin: '0 auto 48px',
             animation: 'fadeUp 1s ease 0.7s both',
+            textShadow: '0 1px 12px rgba(6,13,26,0.6)',
           }}
         >
           Deux professionnels de l&apos;hôtellerie appliquent les standards des meilleurs hôtels

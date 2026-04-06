@@ -1,21 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { useInView } from '@/hooks/useInView';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { CONTACT_INFO } from '@/constants/content';
 import { CREAM, CREAM_DARK, GOLD, NAVY, ROOF_RED, SLATE, WHITE } from '@/constants/colors';
 
 export default function Contact() {
   const { ref: sectionRef, inView: visible } = useInView<HTMLElement>(0.1);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
+  const isMobile = useIsMobile();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -67,16 +61,18 @@ export default function Contact() {
     border: '1px solid #F0EADE',
     borderRadius: 10,
     padding: '14px 18px',
+    minHeight: 48,
     marginBottom: 14,
     outline: 'none',
     transition: 'border-color 0.3s',
+    boxSizing: 'border-box',
   } as React.CSSProperties;
 
   return (
     <section
       id="contact"
       ref={sectionRef}
-      style={{ padding: '100px 32px', background: '#FAF6EE' }}
+      style={{ padding: isMobile ? '56px 20px' : '100px 32px', background: '#FAF6EE' }}
     >
       <div style={{ maxWidth: 600, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>

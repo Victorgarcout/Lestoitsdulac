@@ -1,11 +1,13 @@
 'use client';
 
 import { useInView } from '@/hooks/useInView';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { STATS } from '@/constants/content';
 import { NAVY, GOLD } from '@/constants/colors';
 
 export default function Stats() {
   const { ref, inView: visible } = useInView<HTMLElement>(0.2);
+  const isMobile = useIsMobile();
 
   return (
     <section
@@ -18,8 +20,8 @@ export default function Stats() {
           maxWidth: 1000,
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-          gap: 32,
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(160px, 1fr))',
+          gap: isMobile ? 24 : 32,
         }}
       >
         {STATS.map(({ value, label }, i) => (

@@ -1,11 +1,13 @@
 'use client';
 
 import { useInView } from '@/hooks/useInView';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { REASONS } from '@/constants/content';
 import { NAVY, GOLD, CREAM } from '@/constants/colors';
 
 export default function WhyUs() {
   const { ref, inView: visible } = useInView<HTMLElement>(0.08);
+  const isMobile = useIsMobile();
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,
@@ -18,7 +20,7 @@ export default function WhyUs() {
       id="pourquoi"
       ref={ref}
       style={{
-        padding: '100px 32px',
+        padding: isMobile ? '56px 20px' : '100px 32px',
         background: '#0C1A2E',
         position: 'relative',
         overflow: 'hidden',

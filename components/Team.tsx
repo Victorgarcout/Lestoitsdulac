@@ -1,11 +1,13 @@
 'use client';
 
 import { useInView } from '@/hooks/useInView';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { TEAM_MEMBERS } from '@/constants/content';
 import { GOLD, NAVY, NAVY_LIGHT, CREAM, WHITE } from '@/constants/colors';
 
 export default function Team() {
   const { ref, inView: visible } = useInView<HTMLElement>(0.1);
+  const isMobile = useIsMobile();
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,
@@ -17,7 +19,7 @@ export default function Team() {
     <section
       id="equipe"
       ref={ref}
-      style={{ padding: '100px 32px', background: '#FFFFFF' }}
+      style={{ padding: isMobile ? '56px 20px' : '100px 32px', background: '#FFFFFF' }}
     >
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
