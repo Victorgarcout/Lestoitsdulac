@@ -65,8 +65,8 @@ export default function Footer() {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 20 }}>
               {[
-                [Phone, '[Téléphone]'],
-                [Mail, '[Email]'],
+                [Phone, '+33 7 60 59 52 19'],
+                [Mail, 'contact@lestoitsdulac.fr'],
                 [MapPin, 'Annecy, 74000'],
               ].map(([Icon, text], i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

@@ -334,7 +334,7 @@ export default function OffreDecouverte() {
                 marginBottom: 32,
               }}
             >
-              [Téléphone] — [Email] — lestoitsdulac.fr
+              +33 7 60 59 52 19 — contact@lestoitsdulac.fr — lestoitsdulac.fr
             </p>
             <Link
               href="/#contact"

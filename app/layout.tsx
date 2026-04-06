@@ -58,8 +58,8 @@ export default function RootLayout({
               description:
                 "Conciergerie hôtelière & gestion de biens en location courte durée — Annecy",
               url: 'https://lestoitsdulac.fr',
-              telephone: '[Téléphone]',
-              email: '[Email]',
+              telephone: '+33760595219',
+              email: 'contact@lestoitsdulac.fr',
               address: {
                 '@type': 'PostalAddress',
                 addressLocality: 'Annecy',

@@ -168,7 +168,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
 // ── Contact ───────────────────────────────────────────────────────────────────
 
 export const CONTACT_INFO = {
-  phone: '[Téléphone]',
-  email: '[Email]',
+  phone: '+33 7 60 59 52 19',
+  email: 'contact@lestoitsdulac.fr',
   location: 'Annecy, Haute-Savoie',
 };
