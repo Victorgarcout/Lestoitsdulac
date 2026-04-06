@@ -1,53 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { Award, MapPin, TrendingUp, Eye, HeartHandshake, Shield } from 'lucide-react';
-
-const reasons = [
-  {
-    icon: Award,
-    title: 'Deux hôteliers de métier',
-    desc: "6+ ans en gestion multi-sites hôteliers, revenue management, standards qualité. Pas des gestionnaires — des professionnels de l'accueil.",
-  },
-  {
-    icon: MapPin,
-    title: 'Connaissance du terrain',
-    desc: "Nous avons géré un hôtel à Annecy. Nous connaissons le bassin, sa saisonnalité, ses flux, ses tarifs — de l'intérieur.",
-  },
-  {
-    icon: TrendingUp,
-    title: 'Pricing dynamique pro',
-    desc: 'Les mêmes techniques de yield management que les hôtels 3 et 4 étoiles, appliquées à votre bien pour maximiser chaque nuit.',
-  },
-  {
-    icon: Eye,
-    title: 'Transparence totale',
-    desc: "Reporting mensuel détaillé, accès permanent à vos données de performance. Vous savez exactement ce qui se passe.",
-  },
-  {
-    icon: HeartHandshake,
-    title: 'Intérêts alignés',
-    desc: "Commission sur les revenus — pas de forfait fixe. On gagne quand vous gagnez. C'est aussi simple que ça.",
-  },
-  {
-    icon: Shield,
-    title: 'Zéro engagement',
-    desc: "Préavis 1 mois. Aucun frais d'avance. Vous restez libre. C'est à nous de vous convaincre chaque mois.",
-  },
-];
+import { useInView } from '@/hooks/useInView';
+import { REASONS } from '@/constants/content';
+import { NAVY, GOLD, CREAM } from '@/constants/colors';
 
 export default function WhyUs() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.08 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+  const { ref, inView: visible } = useInView<HTMLElement>(0.08);
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,
@@ -124,7 +82,7 @@ export default function WhyUs() {
             gap: 32,
           }}
         >
-          {reasons.map(({ icon: Icon, title, desc }, i) => (
+          {REASONS.map(({ icon: Icon, title, desc }, i) => (
             <div
               key={i}
               style={{

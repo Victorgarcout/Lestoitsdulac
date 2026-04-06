@@ -1,32 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-
-const stats = [
-  { value: '6+', label: "Années d'hôtellerie" },
-  { value: '20%', label: 'Commission transparente' },
-  { value: '0', label: 'Engagement longue durée' },
-  { value: '48h', label: 'Estimation gratuite' },
-];
+import { useInView } from '@/hooks/useInView';
+import { STATS } from '@/constants/content';
+import { NAVY, GOLD } from '@/constants/colors';
 
 export default function Stats() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.2 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+  const { ref, inView: visible } = useInView<HTMLElement>(0.2);
 
   return (
     <section
       id="stats"
       ref={ref}
-      style={{ background: '#0C1A2E', padding: '52px 32px', position: 'relative', zIndex: 3 }}
+      style={{ background: NAVY, padding: '52px 32px', position: 'relative', zIndex: 3 }}
     >
       <div
         style={{
@@ -37,7 +22,7 @@ export default function Stats() {
           gap: 32,
         }}
       >
-        {stats.map(({ value, label }, i) => (
+        {STATS.map(({ value, label }, i) => (
           <div
             key={i}
             style={{
@@ -53,7 +38,7 @@ export default function Stats() {
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: 42,
                 fontWeight: 700,
-                color: '#C8A55C',
+                color: GOLD,
                 lineHeight: 1,
               }}
             >

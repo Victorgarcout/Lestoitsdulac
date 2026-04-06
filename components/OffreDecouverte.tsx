@@ -1,20 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import { Sparkles } from 'lucide-react';
+import { useInView } from '@/hooks/useInView';
+import { GOLD, GOLD_LIGHT, NAVY } from '@/constants/colors';
 
 export default function OffreDecouverte() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+  const { ref, inView: visible } = useInView<HTMLDivElement>(0.1);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });

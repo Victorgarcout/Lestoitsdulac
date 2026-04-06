@@ -1,21 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useEffect, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
-
-const NAVY = '#0C1A2E';
-const NAVY_LIGHT = '#162742';
-const GOLD = '#C8A55C';
-const GOLD_LIGHT = '#E8D5A3';
-const CREAM = '#FAF6EE';
-const ROOF_RED = '#9B3B2A';
-const ROOF_DARK = '#7A2E20';
-const ROOF_LIGHT = '#B54A36';
-const MOUNTAIN_FAR = '#0E1F3A';
-const MOUNTAIN_MID = '#132847';
-const MOUNTAIN_NEAR = '#162D4F';
-const THIOU_BLUE = '#1E4D6E';
-const THIOU_LIGHT = '#2A6A8E';
+import { useScrollY } from '@/hooks/useScrollY';
+import {
+  NAVY, NAVY_LIGHT, GOLD, GOLD_LIGHT, CREAM,
+  ROOF_RED, ROOF_DARK, ROOF_LIGHT,
+  MOUNTAIN_FAR, MOUNTAIN_MID, MOUNTAIN_NEAR,
+  THIOU_BLUE, THIOU_LIGHT,
+} from '@/constants/colors';
 
 const STARS = Array.from({ length: 80 }, () => ({
   x: Math.random() * 100,
@@ -26,26 +19,20 @@ const STARS = Array.from({ length: 80 }, () => ({
 }));
 
 export default function Hero() {
-  const [scrollY, setScrollY] = useState(0);
-  const [heroH, setHeroH] = useState(1000);
+  const scrollY = useScrollY();
   const heroRef = useRef<HTMLElement>(null);
+  const heroH = useRef(1000);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (heroRef.current) setHeroH(heroRef.current.offsetHeight);
+    if (heroRef.current) heroH.current = heroRef.current.offsetHeight;
     const ro = new ResizeObserver(() => {
-      if (heroRef.current) setHeroH(heroRef.current.offsetHeight);
+      if (heroRef.current) heroH.current = heroRef.current.offsetHeight;
     });
     if (heroRef.current) ro.observe(heroRef.current);
     return () => ro.disconnect();
   }, []);
 
-  const p = Math.min(1, Math.max(0, scrollY / (heroH * 0.7)));
+  const p = Math.min(1, Math.max(0, scrollY / (heroH.current * 0.7)));
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });

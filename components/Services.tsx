@@ -1,53 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { TrendingUp, Home, MessageCircle, KeyRound, Paintbrush, LineChart } from 'lucide-react';
-
-const services = [
-  {
-    icon: TrendingUp,
-    title: 'Revenue management dynamique',
-    desc: "Pricing ajusté quotidiennement selon la demande, la saisonnalité, les événements locaux et la concurrence. Les mêmes méthodes que les hôtels 3 et 4 étoiles.",
-  },
-  {
-    icon: Home,
-    title: 'Distribution multi-canaux',
-    desc: "Publication et synchronisation sur Airbnb, Booking, Abritel et autres plateformes. Plus de visibilité, moins de nuits vides.",
-  },
-  {
-    icon: MessageCircle,
-    title: 'Communication voyageurs',
-    desc: "Avant, pendant et après le séjour. Gestion des avis et réponses. Réactivité garantie pour un classement optimisé.",
-  },
-  {
-    icon: KeyRound,
-    title: 'Check-in / check-out automatisés',
-    desc: "Boîte à clés ou serrure connectée. Accès autonome 24h/24. Instructions personnalisées envoyées à chaque voyageur.",
-  },
-  {
-    icon: Paintbrush,
-    title: 'Ménage & linge hôtelier',
-    desc: "Nettoyage complet entre chaque séjour aux standards hôteliers. Linge de qualité en blanchisserie professionnelle. Refacturé au voyageur.",
-  },
-  {
-    icon: LineChart,
-    title: 'Reporting transparent',
-    desc: "Revenus, taux d'occupation, RevPAR, comparaison marché. Chaque mois, un rapport détaillé. Visibilité totale sur la performance de votre bien.",
-  },
-];
+import { useInView } from '@/hooks/useInView';
+import { SERVICES } from '@/constants/content';
+import { CREAM, CREAM_DARK, GOLD, NAVY, NAVY_LIGHT, SLATE, WHITE } from '@/constants/colors';
 
 export default function Services() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.08 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+  const { ref, inView: visible } = useInView<HTMLElement>(0.08);
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,
@@ -108,7 +66,7 @@ export default function Services() {
             gap: 24,
           }}
         >
-          {services.map(({ icon: Icon, title, desc }, i) => (
+          {SERVICES.map(({ icon: Icon, title, desc }, i) => (
             <div
               key={i}
               style={{

@@ -1,0 +1,16 @@
+export const NAVY = '#0C1A2E';
+export const NAVY_LIGHT = '#162742';
+export const GOLD = '#C8A55C';
+export const GOLD_LIGHT = '#E8D5A3';
+export const CREAM = '#FAF6EE';
+export const CREAM_DARK = '#F0EADE';
+export const SLATE = '#64748B';
+export const WHITE = '#FFFFFF';
+export const ROOF_RED = '#9B3B2A';
+export const ROOF_DARK = '#7A2E20';
+export const ROOF_LIGHT = '#B54A36';
+export const MOUNTAIN_FAR = '#0E1F3A';
+export const MOUNTAIN_MID = '#132847';
+export const MOUNTAIN_NEAR = '#162D4F';
+export const THIOU_BLUE = '#1E4D6E';
+export const THIOU_LIGHT = '#2A6A8E';

@@ -2,27 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import { Mountain, Menu, X } from 'lucide-react';
-
-const navLinks = [
-  ['probleme', 'Le constat'],
-  ['services', 'Services'],
-  ['pourquoi', 'Pourquoi nous'],
-  ['process', 'Comment ça marche'],
-  ['equipe', "L'équipe"],
-  ['contact', 'Contact'],
-] as const;
+import { useScrollY } from '@/hooks/useScrollY';
+import { NAV_LINKS } from '@/constants/content';
+import { GOLD, CREAM, NAVY } from '@/constants/colors';
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const scrollY = useScrollY();
   const [activeSection, setActiveSection] = useState('hero');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
   }, []);
 
   useEffect(() => {
@@ -41,6 +35,8 @@ export default function Navbar() {
     });
     return () => obs.disconnect();
   }, []);
+
+  const scrolled = scrollY > 60;
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -77,14 +73,14 @@ export default function Navbar() {
           style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}
           onClick={() => scrollTo('hero')}
         >
-          <Mountain size={24} color="#C8A55C" strokeWidth={1.5} />
+          <Mountain size={24} color={GOLD} strokeWidth={1.5} />
           <div>
             <div
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: 20,
                 fontWeight: 700,
-                color: '#FAF6EE',
+                color: CREAM,
                 letterSpacing: 2,
                 lineHeight: 1,
               }}
@@ -95,7 +91,7 @@ export default function Navbar() {
               style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: 9,
-                color: '#C8A55C',
+                color: GOLD,
                 letterSpacing: 3,
                 fontWeight: 400,
                 textTransform: 'uppercase',
@@ -106,25 +102,25 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Desktop nav */}
+        {/* Desktop nav + CTA + Hamburger */}
         <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
-          {navLinks.map(([id, label]) => (
+          {NAV_LINKS.map(([id, label]) => (
             <span
               key={id}
               onClick={() => scrollTo(id)}
-              className="hidden md:block"
               style={{
+                display: isMobile ? 'none' : 'block',
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: 13,
                 fontWeight: 400,
-                color: activeSection === id ? '#C8A55C' : 'rgba(255,255,255,0.6)',
+                color: activeSection === id ? GOLD : 'rgba(255,255,255,0.6)',
                 cursor: 'pointer',
                 transition: 'color 0.3s',
                 letterSpacing: 0.5,
-                borderBottom: activeSection === id ? '1px solid #C8A55C' : '1px solid transparent',
+                borderBottom: activeSection === id ? `1px solid ${GOLD}` : '1px solid transparent',
                 paddingBottom: 2,
               }}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = '#C8A55C')}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = GOLD)}
               onMouseLeave={(e) => {
                 if (activeSection !== id)
                   (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.6)';
@@ -133,14 +129,16 @@ export default function Navbar() {
               {label}
             </span>
           ))}
+
           <button
             onClick={() => scrollTo('contact')}
             style={{
+              display: isMobile ? 'none' : 'block',
               fontFamily: "'Outfit', sans-serif",
               fontSize: 13,
               fontWeight: 500,
-              background: 'linear-gradient(135deg, #C8A55C, #B8943F)',
-              color: '#0C1A2E',
+              background: `linear-gradient(135deg, ${GOLD}, #B8943F)`,
+              color: NAVY,
               border: 'none',
               borderRadius: 8,
               padding: '10px 24px',
@@ -160,17 +158,17 @@ export default function Navbar() {
             Estimation gratuite
           </button>
 
-          {/* Mobile hamburger */}
+          {/* Hamburger */}
           <button
-            className="md:hidden"
-            onClick={() => setMenuOpen(!menuOpen)}
             style={{
+              display: isMobile ? 'block' : 'none',
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: '#FAF6EE',
+              color: CREAM,
               padding: 4,
             }}
+            onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -190,14 +188,14 @@ export default function Navbar() {
             borderTop: '1px solid rgba(200,165,92,0.15)',
           }}
         >
-          {navLinks.map(([id, label]) => (
+          {NAV_LINKS.map(([id, label]) => (
             <span
               key={id}
               onClick={() => scrollTo(id)}
               style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: 16,
-                color: activeSection === id ? '#C8A55C' : 'rgba(255,255,255,0.7)',
+                color: activeSection === id ? GOLD : 'rgba(255,255,255,0.7)',
                 cursor: 'pointer',
                 transition: 'color 0.3s',
               }}
@@ -211,8 +209,8 @@ export default function Navbar() {
               fontFamily: "'Outfit', sans-serif",
               fontSize: 15,
               fontWeight: 500,
-              background: 'linear-gradient(135deg, #C8A55C, #B8943F)',
-              color: '#0C1A2E',
+              background: `linear-gradient(135deg, ${GOLD}, #B8943F)`,
+              color: NAVY,
               border: 'none',
               borderRadius: 8,
               padding: '12px 24px',

@@ -1,19 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useInView } from '@/hooks/useInView';
+import { CREAM, GOLD, NAVY, SLATE } from '@/constants/colors';
 
 export default function Constat() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.15 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+  const { ref, inView: visible } = useInView<HTMLElement>(0.15);
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,

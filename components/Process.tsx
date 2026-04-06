@@ -1,42 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-
-const steps = [
-  {
-    num: '1',
-    title: 'Premier contact',
-    desc: 'Vous nous parlez de votre bien. Nous vous envoyons une estimation personnalisée des revenus potentiels sous 48 heures — gratuit et sans engagement.',
-  },
-  {
-    num: '2',
-    title: 'Visite & recommandations',
-    desc: "Nous nous déplaçons, évaluons le potentiel de votre bien et vous faisons nos recommandations d'optimisation concrètes.",
-  },
-  {
-    num: '3',
-    title: 'Mise en route',
-    desc: "Shooting photo, création d'annonce optimisée, configuration du pricing dynamique, publication multi-plateformes. Votre bien est prêt à performer.",
-  },
-  {
-    num: '4',
-    title: 'Gestion & reporting',
-    desc: 'Nous gérons tout au quotidien : réservations, voyageurs, clés, ménage, qualité. Chaque mois, un rapport détaillé de la performance de votre bien.',
-  },
-];
+import { useInView } from '@/hooks/useInView';
+import { STEPS } from '@/constants/content';
+import { CREAM, GOLD, NAVY, NAVY_LIGHT, SLATE } from '@/constants/colors';
 
 export default function Process() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+  const { ref, inView: visible } = useInView<HTMLElement>(0.1);
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,
@@ -91,7 +60,7 @@ export default function Process() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
-          {steps.map(({ num, title, desc }, i) => (
+          {STEPS.map(({ num, title, desc }, i) => (
             <div
               key={i}
               style={{

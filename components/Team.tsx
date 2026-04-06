@@ -1,37 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { Users, Star } from 'lucide-react';
-
-const members = [
-  {
-    icon: Users,
-    name: 'Victor',
-    role: 'Stratégie & Revenue Management',
-    bio: "Directeur multi-sites hôteliers depuis 6 ans (groupe somnOO). A géré l'Hôtel Première Classe d'Annecy. Spécialiste revenue management, distribution OTA et optimisation tarifaire. Investisseur immobilier — il comprend vos enjeux parce qu'il en est un.",
-    tags: ['Yield Management', 'Distribution OTA', 'Multi-sites', 'Investisseur LMNP'],
-  },
-  {
-    icon: Star,
-    name: 'Lamyae',
-    role: 'Opérations & Expérience voyageur',
-    bio: "Cheffe de réception hôtelière. Expérience directe de l'accueil voyageurs, du contrôle qualité et de la gestion opérationnelle au quotidien. C'est elle qui garantit que chaque voyageur vit une expérience irréprochable.",
-    tags: ['Accueil & Qualité', 'PMS / Channel Manager', 'Front Office', 'Standards hôteliers'],
-  },
-];
+import { useInView } from '@/hooks/useInView';
+import { TEAM_MEMBERS } from '@/constants/content';
+import { GOLD, NAVY, NAVY_LIGHT, CREAM, WHITE } from '@/constants/colors';
 
 export default function Team() {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+  const { ref, inView: visible } = useInView<HTMLElement>(0.1);
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,
@@ -92,7 +66,7 @@ export default function Team() {
             gap: 40,
           }}
         >
-          {members.map(({ icon: Icon, name, role, bio, tags }, i) => (
+          {TEAM_MEMBERS.map(({ icon: Icon, name, role, bio, tags }, i) => (
             <div key={i} style={anim(0.15 + i * 0.1)}>
               <div
                 style={{

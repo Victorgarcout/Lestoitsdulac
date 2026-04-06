@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { useInView } from '@/hooks/useInView';
+import { CONTACT_INFO } from '@/constants/content';
+import { CREAM, CREAM_DARK, GOLD, NAVY, ROOF_RED, SLATE, WHITE } from '@/constants/colors';
 
 export default function Contact() {
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const { ref: sectionRef, inView: visible } = useInView<HTMLElement>(0.1);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,15 +17,6 @@ export default function Contact() {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) obs.observe(sectionRef.current);
-    return () => obs.disconnect();
-  }, []);
 
   const anim = (delay = 0) => ({
     opacity: visible ? 1 : 0,
@@ -270,9 +263,9 @@ export default function Contact() {
           }}
         >
           {[
-            [Phone, '[Téléphone]'],
-            [Mail, '[Email]'],
-            [MapPin, 'Annecy, Haute-Savoie'],
+            [Phone, CONTACT_INFO.phone],
+            [Mail, CONTACT_INFO.email],
+            [MapPin, CONTACT_INFO.location],
           ].map(([Icon, text], i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <Icon size={16} color="#C8A55C" strokeWidth={1.5} />
